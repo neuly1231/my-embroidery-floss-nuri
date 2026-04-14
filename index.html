@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자수실 장부</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <div class="header-deco">
+            <div class="header-line"></div>
+            <div class="header-icon">🧵</div>
+            <div class="header-line right"></div>
+        </div>
+        <h1>자수실 장부</h1>
+        <p class="header-sub">EMBROIDERY THREAD COLLECTION</p>
+    </header>
+
+    <!-- 추가 카드 -->
+    <div class="card">
+        <div class="card-title"><span>✦</span> 새로운 자수실 추가</div>
+        <form id="add-form" class="form-group">
+            <select id="brand" required>
+                <option value="DMC">DMC</option>
+                <option value="Anchor">앵커 (Anchor)</option>
+                <option value="Appleton">애플톤 (Appleton)</option>
+            </select>
+            <select id="type" required>
+                <option value="25번사">25번사</option>
+                <option value="12번사">12번사</option>
+                <option value="8번사">8번사</option>
+                <option value="5번사">5번사</option>
+                <option value="울사">울사</option>
+            </select>
+            <input type="text" id="colorCode" placeholder="번호 입력 (예: 310, BLANC)" required>
+            <button type="submit" class="btn-add">+ 추가</button>
+        </form>
+    </div>
+
+    <!-- 목록 카드 -->
+    <div class="card">
+        <div class="card-title"><span>✦</span> 보유 목록</div>
+
+        <div class="stats-row" id="stats-row"></div>
+
+        <div class="filter-group">
+            <select id="filter-brand">
+                <option value="All">모든 제조사</option>
+                <option value="DMC">DMC</option>
+                <option value="Anchor">앵커 (Anchor)</option>
+                <option value="Appleton">애플톤 (Appleton)</option>
+            </select>
+            <select id="filter-type">
+                <option value="All">모든 굵기</option>
+                <option value="25번사">25번사</option>
+                <option value="12번사">12번사</option>
+                <option value="8번사">8번사</option>
+                <option value="5번사">5번사</option>
+                <option value="울사">울사</option>
+            </select>
+        </div>
+
+        <hr class="divider">
+
+        <div class="table-wrap">
+            <table id="thread-table" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>제조사</th>
+                        <th>굵기/종류</th>
+                        <th>색상 번호</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody id="thread-list"></tbody>
+            </table>
+
+            <div id="empty-message" class="empty-state">
+                <span class="empty-icon">🪡</span>
+                <p>아직 등록된 자수실이 없어요</p>
+                <p class="empty-hint">위 폼에서 자수실을 추가해 보세요</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">✦ 자수실 장부 ✦</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
