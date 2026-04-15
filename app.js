@@ -1,4 +1,4 @@
-const GAS_URL = "https://script.google.com/macros/s/AKfycbw99hZyHQuqEC-dlBWcwSxr4Qu9PnlfocuyYVzeh2-WqiH-NE6e47FLLK-lfsoBdVhkvQ/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyzZtb2MAnuBBZpb4MfiEanC5gOXRmrqIwHrnvLMIbPibCcX_NpIW02sknXQJkVHUnfhw/exec";
 let threads = [];
 
 async function loadThreads() {
