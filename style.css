@@ -489,3 +489,35 @@ tr.is-empty .type-tag {
         font-size: 0.7rem;
     }
 }
+
+/* ── 검색창 스타일 ── */
+.search-wrap {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+#search-input {
+    width: 100%;
+    padding: 12px 14px 12px 42px; /* 아이콘 자리를 위해 왼쪽 패딩 크게 */
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--terracotta);
+    box-shadow: 0 0 0 3px rgba(196, 113, 74, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    opacity: 0.5;
+    pointer-events: none;
+}
