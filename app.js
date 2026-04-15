@@ -12,7 +12,8 @@ async function loadThreads() {
 }
 
 const form = document.getElementById('add-form');
-const searchInput = document.getElementById('search-input'); // 검색창 선언
+const searchInput = document.getElementById('search-input');
+const sortSelect = document.getElementById('sort-select'); // 정렬 셀렉트 추가
 
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -96,26 +97,40 @@ function renderList() {
     const emptyMessage = document.getElementById('empty-message');
     const threadTable = document.getElementById('thread-table');
     
-    // 필터 값들 가져오기
     const fBrand = document.getElementById('filter-brand').value;
     const fType = document.getElementById('filter-type').value;
-    const searchTerm = searchInput.value.trim().toUpperCase(); // 검색어
+    const sortVal = sortSelect.value; // 정렬 값
+    const searchTerm = searchInput.value.trim().toUpperCase();
 
     listContainer.innerHTML = '';
     renderStats();
 
-    // 통합 필터링 로직 (브랜드 + 종류 + 검색어)
-    const filtered = threads.filter(t => {
+    // 1. 필터링 (브랜드, 종류, 검색어)
+    let filtered = threads.filter(t => {
         const matchBrand = (fBrand === 'All' || t.brand === fBrand);
         const matchType = (fType === 'All' || t.type === fType);
-        const matchSearch = t.colorCode.includes(searchTerm); // 번호 포함 여부 체크
+        const matchSearch = t.colorCode.includes(searchTerm);
         return matchBrand && matchType && matchSearch;
+    });
+
+    // 2. 정렬 로직 적용
+    filtered.sort((a, b) => {
+        if (sortVal === 'newest') {
+            // 최신순: row 번호가 큰 것이 위로 (구글 시트 아래쪽이 최신이므로)
+            return b.row - a.row;
+        } else if (sortVal === 'asc') {
+            // 오름차순: 문자열 내 숫자를 인식하는 자연어 정렬
+            return a.colorCode.localeCompare(b.colorCode, undefined, { numeric: true, sensitivity: 'base' });
+        } else if (sortVal === 'desc') {
+            // 내림차순: 자연어 정렬 역순
+            return b.colorCode.localeCompare(a.colorCode, undefined, { numeric: true, sensitivity: 'base' });
+        }
+        return 0;
     });
 
     if (filtered.length === 0) {
         emptyMessage.style.display = 'block';
         threadTable.style.display = 'none';
-        emptyMessage.querySelector('p').textContent = searchTerm ? '검색 결과가 없어요' : '조건에 맞는 자수실이 없어요';
     } else {
         emptyMessage.style.display = 'none';
         threadTable.style.display = 'table';
@@ -140,9 +155,10 @@ function renderList() {
     }
 }
 
-// 필터 및 검색 이벤트 리스너
+// 모든 이벤트에 renderList 연결
 document.getElementById('filter-brand').addEventListener('change', renderList);
 document.getElementById('filter-type').addEventListener('change', renderList);
-searchInput.addEventListener('input', renderList); // 검색창 입력 시마다 즉시 실행
+sortSelect.addEventListener('change', renderList); // 정렬 변경 시
+searchInput.addEventListener('input', renderList);
 
 loadThreads();
